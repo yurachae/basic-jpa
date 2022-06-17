@@ -7,7 +7,7 @@ import javax.persistence.Persistence;
 import java.util.List;
 
 public class jpaMain {
-    public static void main(String[] args) {
+   /* public static void main(String[] args) {
         //하나의 웹서버에 하나만 생성가능
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("start");
 
@@ -77,5 +77,5 @@ public class jpaMain {
             em.close();//필수!!
         }
         emf.close();
-    }
+    }*/
 }
