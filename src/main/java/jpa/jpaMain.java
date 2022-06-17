@@ -21,9 +21,9 @@ public class jpaMain {
         try {
             //회원등록
             //비영속 상태
-            Member member = new Member();
-            member.setId(101L);
-            member.setName("memberA");
+//            Member member = new Member();
+//            member.setId(101L);
+//            member.setName("memberA");
 
             //영속 상태 - 쿼리는 commit시 날라감
 //            System.out.println("*** before ***");
@@ -32,13 +32,14 @@ public class jpaMain {
 
             //회원조회
             //find시 1차 캐시에서 조회 - 쿼리 X
-            Member findMember = em.find(Member.class, 100L);
-            System.out.println("findMember.getId = " + findMember.getId());
-            System.out.println("findMember.getName = " + findMember.getName());
+//            Member findMember = em.find(Member.class, 100L);
+//            System.out.println("findMember.getId = " + findMember.getId());
+//            System.out.println("findMember.getName = " + findMember.getName());
 
             //영속 엔티티 동일성 보장
-            Member findMember2 = em.find(Member.class, 100L);
-            System.out.println("findMemeber == findMember2 ? " + (findMember == findMember2));
+//            Member findMember2 = em.find(Member.class, 100L);
+//            System.out.println("findMemeber == findMember2 ? " + (findMember == findMember2));
+
             //회원삭제
 //            em.remove(findMember);
 
@@ -54,6 +55,13 @@ public class jpaMain {
 //                System.out.println("member = " + member.getId());
 //            }
 
+            //쿼리를 모았다가 commit 시 한번에 보냄 (쓰기 지연)
+            //persistence.xml에서 batch size 설정가능
+            Member member1 = new Member(201L, "member201");
+            Member member2 = new Member(202L, "member202");
+
+            em.persist(member1);
+            em.persist(member2);
 
             tx.commit(); //transaction 정상적으로 끝날 때 commit
         }catch (Exception e){
