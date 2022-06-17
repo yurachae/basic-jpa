@@ -57,12 +57,18 @@ public class jpaMain {
 
             //쿼리를 모았다가 commit 시 한번에 보냄 (쓰기 지연)
             //persistence.xml에서 batch size 설정가능
-            Member member1 = new Member(201L, "member201");
-            Member member2 = new Member(202L, "member202");
+//            Member member1 = new Member(201L, "member201");
+//            Member member2 = new Member(202L, "member202");
+//
+//            em.persist(member1);
+//            em.flush(); //DB에 먼저 반영(쓰지 지연 데이터들이 반영됨), 1차캐시 비우지 않음
+//            em.persist(member2);
 
-            em.persist(member1);
-            em.flush(); //DB에 먼저 반영(쓰지 지연 데이터들이 반영됨), 1차캐시 비우지 않음
-            em.persist(member2);
+            //준영속 상태
+            Member findMember = em.find(Member.class, 100L);
+            findMember.setName("AAA");  //영속상태
+            em.detach(findMember); //준영속상태 -update문 나가지 않음
+            em.clear();   //준영속상태 - 1차캐시 비움
 
             tx.commit(); //transaction 정상적으로 끝날 때 commit
         }catch (Exception e){
