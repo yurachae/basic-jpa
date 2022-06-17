@@ -61,6 +61,7 @@ public class jpaMain {
             Member member2 = new Member(202L, "member202");
 
             em.persist(member1);
+            em.flush(); //DB에 먼저 반영(쓰지 지연 데이터들이 반영됨), 1차캐시 비우지 않음
             em.persist(member2);
 
             tx.commit(); //transaction 정상적으로 끝날 때 commit
