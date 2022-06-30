@@ -18,7 +18,7 @@
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>
             <property name="hibernate.use_sql_comments" value="true"/>
-            <property name="hibernate.jdbc.batch_size" value="10"/>
+            <property name="hibernate.jdbc.batch_size" value="1000"/>
             <!-- 아래 코드는 개발에서만 사용!
                 *운영사용X* value = "create" ::  기존 테이블 삭제 후 다시 생성
                 *운영사용X* value = "create-drop" :: 종료시점에 테이블 drop
@@ -26,7 +26,7 @@
                 value = "validate" :: 엔티티, 테이블이 정상 매칭됐는지만 확인
                 value = "none" :: 사용하지 않음
             -->
-            <property name="hibernate.hbm2ddl.auto" value="update" />
+            <property name="hibernate.hbm2ddl.auto" value="create" />
         </properties>
     </persistence-unit>
 </persistence>
