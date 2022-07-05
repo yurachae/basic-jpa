@@ -1,14 +1,8 @@
 package jpabook.jpashop;
 
-import jpabook.jpashop.domain.Book;
-import jpabook.jpashop.domain.Member;
-import jpabook.jpashop.domain.Order;
-import jpabook.jpashop.domain.OrderItem;
+import jpabook.jpashop.jpql.Member2;
 
 import javax.persistence.*;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 import java.util.List;
 
 public class JpaMain {
@@ -20,10 +14,25 @@ public class JpaMain {
 
         tx.begin();
         try {
-            //Native SQL
-            String sql = "SELECT MEMBER_ID, NAME FROM MEMBER WHERE NAME LIKE '%kim%'";
-            List<Member> result = em.createNamedQuery(sql, Member.class).getResultList();
 
+            //Member 생성
+            Member2 member = new Member2();
+            member.setUserName("user1");
+            member.setAge(20);
+            em.persist(member);
+
+            //쿼리문 실행
+            TypedQuery<Member2> query1 = em.createQuery("select m from Member2 m ", Member2.class);  //리턴 타입 명확O
+            TypedQuery<String> query2 = em.createQuery("select m.userName from Member2 m where m.userName=:userName", String.class);  //리턴 타입 명확O
+            Query query3 = em.createQuery("select m from Member2 m");   //리턴 타입 명확X
+
+            //쿼리문 반환
+            List<Member2> result1 = query1.getResultList(); //결과 하나 이상
+            query2.setParameter("userName", "user1");
+            String result2 = query2.getSingleResult(); //결과가 하나인 경우
+
+            result1.stream().forEach( m -> System.out.println("result1 ::::"+m));
+            System.out.println("result2 = " + result2);
 
             tx.commit();
         }catch (Exception e){
