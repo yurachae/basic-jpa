@@ -6,6 +6,9 @@ import jpabook.jpashop.domain.Order;
 import jpabook.jpashop.domain.OrderItem;
 
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.List;
 
 public class JpaMain {
@@ -17,9 +20,16 @@ public class JpaMain {
 
         tx.begin();
         try {
-            //JPQL
-            List<Member> resultList = em.createQuery("select m from Member m where m.name like '%kim%'", Member.class)
-                    .getResultList();
+            //Criteria
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<Member> query = cb.createQuery(Member.class);
+
+            Root<Member> m = query.from(Member.class);
+
+            CriteriaQuery<Member> cq = query.select(m).where(cb.equal(m.get("name"), "kim"));
+            List<Member> result = em.createQuery(cq).getResultList();
+
+
             tx.commit();
         }catch (Exception e){
             tx.rollback();
