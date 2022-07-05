@@ -1,10 +1,12 @@
 package jpabook.jpashop;
 
 import jpabook.jpashop.domain.Book;
+import jpabook.jpashop.domain.Member;
 import jpabook.jpashop.domain.Order;
 import jpabook.jpashop.domain.OrderItem;
 
 import javax.persistence.*;
+import java.util.List;
 
 public class JpaMain {
 
@@ -15,13 +17,9 @@ public class JpaMain {
 
         tx.begin();
         try {
-            Book book = new Book();
-            book.setName("book1");
-            book.setAuthor("author1");
-            book.setIsbn("123123123");
-
-            em.persist(book);
-
+            //JPQL
+            List<Member> resultList = em.createQuery("select m from Member m where m.name like '%kim%'", Member.class)
+                    .getResultList();
             tx.commit();
         }catch (Exception e){
             tx.rollback();
