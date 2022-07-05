@@ -21,7 +21,7 @@ public class JpaMain {
         tx.begin();
         try {
             //Native SQL
-            String sql = "SELECT ID, NAME FROM MEMBER WHERE NAME LIKE '%kim%'";
+            String sql = "SELECT MEMBER_ID, NAME FROM MEMBER WHERE NAME LIKE '%kim%'";
             List<Member> result = em.createNamedQuery(sql, Member.class).getResultList();
 
 
