@@ -20,14 +20,9 @@ public class JpaMain {
 
         tx.begin();
         try {
-            //Criteria
-            CriteriaBuilder cb = em.getCriteriaBuilder();
-            CriteriaQuery<Member> query = cb.createQuery(Member.class);
-
-            Root<Member> m = query.from(Member.class);
-
-            CriteriaQuery<Member> cq = query.select(m).where(cb.equal(m.get("name"), "kim"));
-            List<Member> result = em.createQuery(cq).getResultList();
+            //Native SQL
+            String sql = "SELECT ID, NAME FROM MEMBER WHERE NAME LIKE '%kim%'";
+            List<Member> result = em.createNamedQuery(sql, Member.class).getResultList();
 
 
             tx.commit();
